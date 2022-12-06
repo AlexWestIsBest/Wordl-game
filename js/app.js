@@ -52,16 +52,23 @@ let processGuess = (evt) => {
         })
     }
     if (guessesRemaining === 2) {
-        // Trigger words, lower rank
-        // append below guess box
+        // Trigger words
+        $.ajax(API_URL + `rel_trg=` + todaysWordle).then(function(data) {
+            let secondHint = `${data[0].word}, ${data[1].word}, ${data[2].word}...`
+            secondHint = secondHint[0].toUpperCase() + secondHint.substring(1)
+            console.log(secondHint)
+            hintElement.textContent = `Hint: ${secondHint}`
+            document.querySelector(`body`).appendChild(hintElement)
+        })
     }
     if (guessesRemaining === 1) {
-        // Trigger words, top
-        // append below guess box
-        $.ajax(API_URL + `rel_trg=` + todaysWordle).then(function(data) {
-            let finalHint = `${data[0].word}, ${data[1].word}, ${data[2].word}...`
+        // Definition
+        $.ajax(API_URL + `sp=` + todaysWordle + `&md=d`).then(function(data) {
+            console.log(data)
+            let finalHint = `${data[0].defs[0]}`
+            finalHint = finalHint[2].toUpperCase() + finalHint.substring(3)
             console.log(finalHint)
-            hintElement.textContent = `Hint: ${finalHint}`
+            hintElement.textContent = `Hint: ${finalHint}.`
             document.querySelector(`body`).appendChild(hintElement)
         })
     }
