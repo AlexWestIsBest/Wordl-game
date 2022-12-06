@@ -25,7 +25,7 @@
 
 let processGuess = (evt) => {
     let currentGuess = document.querySelector(`input`).value.toLowerCase()
-    console.log(currentGuess)
+    console.log(`=============`)
 
     // Create color code
     for (let i = 0; i < 5; i++) {
@@ -60,14 +60,39 @@ let processGuess = (evt) => {
     }
     else console.log(`Guesses remaining: ${maxGuesses}`)
 
+    // API hints
+    let hintElement = document.createElement(`h4`)
+    if (maxGuesses === 3) {
+        // Part of speech
+        $.ajax(API_URL + `&md=p`).then(function(data) {
+            const partOfSpeech = data[0].tags[0]
+            let guess3Hint = ``
+            if (partOfSpeech === `n`) guess3Hint = `Today's wordle is a noun.`
+            else if (partOfSpeech === `v`) guess3Hint = `Today's wordle is a verb.`
+            else if (partOfSpeech === `adj`) guess3Hint = `Today's wordle is an adjective.`
+            else if (partOfSpeech === `adv`) guess3Hint = `Today's wordle is an adverb.`
+            console.log(guess3Hint)
+            hintElement.textContent = `Hint: ${guess3Hint}`
+            document.querySelector(`body`).appendChild(hintElement)
+        })
+    }
+    if (maxGuesses === 4) {
+        // Trigger words, lower rank
+        // append below guess box
+    }
+    if (maxGuesses === 5) {
+        // Trigger words, top
+        // append below guess box
+    }
+
     // Reset things
     document.querySelector(`input`).value = ``
     $(`input`).focus()
 }
 
 // Variables
-let API_URL = "https://api.datamuse.com/words?sp="
 let todaysWordle = `apple`
+let API_URL = "https://api.datamuse.com/words?sp=" + todaysWordle
 let guessList = []
 let colorCode = ''
 let colorCodes = []
