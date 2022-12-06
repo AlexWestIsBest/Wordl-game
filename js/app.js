@@ -1,28 +1,3 @@
-
-
-// let isRealWord1 = (wordToTest) => {
-//     console.log(`Sending to API...`)
-//     $.ajax(API_URL + wordToTest).then(function(data) {
-//         console.log(data)
-//         let verified = true
-//         verified = isRealWord2(wordToTest, data[0].word)
-//         return verified
-//     })
-// // }
-
-// let isRealWord2 = (word1, word2) => {
-//     console.log(`Testing ${word1} and ${word2}`)
-//     if (word1 === word2) return true
-//     else return false
-// }
-
-// let renderGrid = (guessList) => {
-//     for (guesses in guessList) {
-
-//     }
-// }
-
-
 let processGuess = (evt) => {
     let currentGuess = document.querySelector(`input`).value.toLowerCase()
     console.log(`=============`)
@@ -53,36 +28,42 @@ let processGuess = (evt) => {
     console.log(guessList)
 
     // Count guesses
-    maxGuesses -= 1
-    if (maxGuesses === 0) {
+    guessesRemaining -= 1
+    if (guessesRemaining === 0) {
         alert(`Alas! Game over!`)
         window.location.reload()
     }
-    else console.log(`Guesses remaining: ${maxGuesses}`)
+    else console.log(`Guesses remaining: ${guessesRemaining}`)
 
     // API hints
     let hintElement = document.createElement(`h4`)
-    if (maxGuesses === 3) {
+    if (guessesRemaining === 3) {
         // Part of speech
-        $.ajax(API_URL + `&md=p`).then(function(data) {
+        $.ajax(API_URL + `sp=` + todaysWordle + `&md=p`).then(function(data) {
             const partOfSpeech = data[0].tags[0]
-            let guess3Hint = ``
-            if (partOfSpeech === `n`) guess3Hint = `Today's wordle is a noun.`
-            else if (partOfSpeech === `v`) guess3Hint = `Today's wordle is a verb.`
-            else if (partOfSpeech === `adj`) guess3Hint = `Today's wordle is an adjective.`
-            else if (partOfSpeech === `adv`) guess3Hint = `Today's wordle is an adverb.`
-            console.log(guess3Hint)
-            hintElement.textContent = `Hint: ${guess3Hint}`
+            let firstHint = ``
+            if (partOfSpeech === `n`) firstHint = `Today's wordle is a noun.`
+            else if (partOfSpeech === `v`) firstHint = `Today's wordle is a verb.`
+            else if (partOfSpeech === `adj`) firstHint = `Today's wordle is an adjective.`
+            else if (partOfSpeech === `adv`) firstHint = `Today's wordle is an adverb.`
+            console.log(firstHint)
+            hintElement.textContent = `Hint: ${firstHint}`
             document.querySelector(`body`).appendChild(hintElement)
         })
     }
-    if (maxGuesses === 4) {
+    if (guessesRemaining === 2) {
         // Trigger words, lower rank
         // append below guess box
     }
-    if (maxGuesses === 5) {
+    if (guessesRemaining === 1) {
         // Trigger words, top
         // append below guess box
+        $.ajax(API_URL + `rel_trg=` + todaysWordle).then(function(data) {
+            let finalHint = `${data[0].word}, ${data[1].word}, ${data[2].word}...`
+            console.log(finalHint)
+            hintElement.textContent = `Hint: ${finalHint}`
+            document.querySelector(`body`).appendChild(hintElement)
+        })
     }
 
     // Reset things
@@ -92,11 +73,11 @@ let processGuess = (evt) => {
 
 // Variables
 let todaysWordle = `apple`
-let API_URL = "https://api.datamuse.com/words?sp=" + todaysWordle
+let API_URL = "https://api.datamuse.com/words?"
 let guessList = []
 let colorCode = ''
 let colorCodes = []
-let maxGuesses = 6
+let guessesRemaining = 6
 const $btn = $(`button`)
 const $input = $(`input`)
 
@@ -105,7 +86,7 @@ $(`input`).focus()
 $(document).on(`click`, (e) => $(`input`).focus())
 $btn.on(`click`, processGuess)
 $(`input`).keyup((e) => {
-    const keycode = (event.keyCode ? event.keyCode : event.which);
+    const keycode = (e.keyCode ? e.keyCode : e.which);
     if(keycode == '13') processGuess()
 })
 
