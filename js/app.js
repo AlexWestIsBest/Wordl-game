@@ -33,7 +33,9 @@ let processGuess = (evt) => {
         alert(`Alas! Game over!`)
         window.location.reload()
     }
-    else console.log(`Guesses remaining: ${guessesRemaining}`)
+    $(`#guessCount`).empty().html(`Guesses remaining: ${guessesRemaining}`)
+    if (guessesRemaining === 1) $(`#guessCount`).empty().html(`This is your last chance!`)
+
 
     // API hints
     let hintElement = document.createElement(`h4`)
@@ -96,54 +98,3 @@ $(`input`).keyup((e) => {
     const keycode = (e.keyCode ? e.keyCode : e.which);
     if(keycode == '13') processGuess()
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// render empty grid
-    // on click, process the guess
-        // (do while loop)
-        // (do) if the guess is 5 letters...
-            // break into chars
-            // add color codes to chars
-            // add chars to render grid as new row
-            //  if guess === today's wordle
-                // alerts "congrats!"
-                // Refresh page
-        // (while guess )
