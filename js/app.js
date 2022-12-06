@@ -14,9 +14,9 @@ let processGuess = (evt) => {
     colorCode = ''
     console.log(colorCodes)
 
-    // Update HTML
+    // Update HTML guess list
     const listItem = document.createElement(`li`)
-    listItem.textContent = currentGuess
+    listItem.textContent = `${currentGuess} - ${colorCodes[colorCodes.length - 1]}`
     document.querySelector(`ul`).appendChild(listItem)
 
     // Check guess
@@ -35,7 +35,6 @@ let processGuess = (evt) => {
     }
     $(`#guessCount`).empty().html(`Guesses remaining: ${guessesRemaining}`)
     if (guessesRemaining === 1) $(`#guessCount`).empty().html(`This is your last chance!`)
-
 
     // API hints
     let hintElement = document.createElement(`h4`)
