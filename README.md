@@ -42,7 +42,7 @@ The game also ensures all text would make your english teacher proud, with real 
 
 *The game currently has one word hardcoded in. An array of curated words made avaiable to all players would allow the game to be played more than once, with people all playing for the same word each day.*
 
-#### Edge case: words with duplicate letters (GREEN, HELLO, TAPAS, )
+#### Edge case: words with duplicate letters (HELLO, COLOR, TAPAS)
 
 *The program doesn't accurately handle guesses with duplicate letters. For example, a Wordle of 'CRATE` with a guess of 'ARROW' would give ☐☐☐☒☒, wrongly hinting to the user that the correct answer has two 'R' characters.*
 
