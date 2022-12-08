@@ -2,20 +2,21 @@
 
 *A simple recreation of 2022's popular word game, Wordle.*
 
-`Technologies used:` HTML, CSS, JavaScript, jQuery
+**Languages:** HTML, CSS, JavaScript
 
-`API used:` Datamuse
-https://www.datamuse.com/api/
+**Frameworks:** jQuery
+
+**API:** Datamuse (https://www.datamuse.com/api/)
 
 ---
 
 ## Getting Started
 
-[Play the game here](#)
+[Find the game here](https://alexwestisbest.github.io/Wordle-game/)
 
 Players have six attempts to guess a five-letter word, with feedback given in the form of tiles indicating when letters match or occupy the correct position.
 
-![Screenshot showing 2 guesses](https://i.imgur.com/WvltCFj.png)
+![Screenshot showing 2 guesses](https://i.imgur.com/TfxK3Y1.png)
 
 ☑ Right letter, right place
 
@@ -23,36 +24,43 @@ Players have six attempts to guess a five-letter word, with feedback given in th
 
 ☒ Wrong letter
 
-Additional feedback is provided for later guesses in the form of etymology clues (via API), including part of speech, associated words, and the definition.
+Additional feedback is provided for later guesses in the form of etymology clues (via API), including part of speech, associated words, and finally the definition.
 
-![Screenshot showing 5 guesses](https://i.imgur.com/DiHGwgK.png)
+![Screenshot showing 5 guesses](https://i.imgur.com/f5CgpwU.png)
 
 ---
+
 ## Minutia
 
-Though aesthetically basic, the game was optimized for UX. The game include a streamlined submission field that doesn't need to be clicked before typing, and the page defaults to keeping that field in focus (active) so that players may play the game without need for their mouse (type, then hit enter).
+The game was optimized for a clean UX and efficient play. For example, the submission field stays in focus awaiting keyboard input, and all etymology hints are human-readable without awkward capitalization or a plural 'You have 1 guesses remaining'.
 
-The game also ensures all text would make your english teacher proud, with real time guess tracking and etymology hints being human-readable without awkward capitalization or a plural 'You have 1 guesses remaining'.
+In addition, the text entry field contains robust user-proofing for edge cases. It checks that every guess...
+
+- Is exactly 5 characters
+- Isn't made of numbers/symbols
+- Wasn't previously guessed
+- Exists in online dictionaries
+- Isn't a statistically obscure word
 
 ---
 
 ## Future Enhancements
 
-#### Universal word list
+**Larger word list**
 
-*The game currently has one word hardcoded in. An array of curated words made avaiable to all players would allow the game to be played more than once, with people all playing for the same word each day.*
+The game currently has 24 words, cycling by the hour (more fun for testing out). It would be nice to build a list of 365 words (verified by API as a common english word with quality trigger words and a clear definition) to cycle through once per day.
 
-#### Edge case: words with duplicate letters (HELLO, COLOR, TAPAS)
+**Edge case: words with duplicate letters (HELLO, COLOR, TAPAS)**
 
-*The program doesn't accurately handle guesses with duplicate letters. For example, a Wordle of 'CRATE` with a guess of 'ARROW' would give ☐☐☐☒☒, wrongly hinting to the user that the correct answer has two 'R' characters.*
+The program doesn't accurately handle guesses with duplicate letters. For example, a Wordle of 'CRATE` with a guess of 'ARROW' would give ☐☐☐☒☒, wrongly hinting to the user that the correct answer has two 'R' characters.
 
-#### Graphical display
+**Graphical display**
 
-*Real-world Wordle displays user guesses in a grid, coloring the characters in each guess based on their correctness. I'd like to update this with a fully visual display for users.*
+Real-world Wordle displays user guesses in a grid, coloring the characters in each guess based on their correctness. I'd like to update this with a fully visual display for users.
 
-#### Butter-smooth scaling
+**Butter-smooth window scaling**
 
-*Like every good program, I'd like to use @media-query to allow good scaling for all displays, from smartphones to 4k desktop monitors.*
+Like every good program, I'd like to use @media-query to allow good scaling for all displays, from smartphones to 4k desktop monitors.
 
 ---
 
