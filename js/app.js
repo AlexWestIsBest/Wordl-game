@@ -8,12 +8,12 @@ let validateGuess = (evt) => {
                         processGuess(guessCandidate)
                     }
                     else {
-                        invalidGuess(`Use a real word`)
+                        invalidGuess(`Not a real word`)
                         resetUI()
                     }
                 }
                 else {
-                    invalidGuess(`Use a real word`)
+                    invalidGuess(`Not a real word`)
                     resetUI()
                 }
             })
@@ -37,7 +37,7 @@ let invalidGuess = (message) => {
     setTimeout(function(){
         $(`input`).attr(`placeholder`,`Enter a 5-letter word`)
         document.querySelector(`input`).style.backgroundColor = `rgba(255,255,255,0)`
-    }, 1800)
+    }, 1300)
 }
 
 let resetUI = () => {
@@ -118,7 +118,11 @@ let processGuess = (currentGuess) => {
 }
 
 // Variables
-let todaysWordle = `WATER` // Remove words with duplicate letters
+const wordleList = [`WORLD`, `RIGHT`, `PLACE`, `WATER`, `POINT`, `HUMAN`, `PARTY`, `COURT`, `TABLE`, `STUDY`, `WORDS`, `LIGHT`, `MONEY`, `SOUTH`, `NORTH`, `FIELD`, `MAJOR`, `HEART`, `TRADE`, `MODEL`, `GRANT`, `SOCKS`, `SHOES`, `BRUSH`]
+let todaysWordle = wordleList[Math.floor(Math.random() * 20)]
+const d = new Date
+todaysWordle = wordleList[d.getHours()]
+console.log(`The answer definitely isn't ${todaysWordle}`)
 let API_URL = "https://api.datamuse.com/words?"
 let guessList = []
 let colorCode = ''

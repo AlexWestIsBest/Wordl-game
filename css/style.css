@@ -27,9 +27,10 @@ input, button {
     border-color: rgb(86, 87, 88);
     border-style: solid;
     border-radius: 100px;
-    color: white;
+    color: rgb(238, 238, 238);
     margin-top: 30px;
-    padding: 6px 18px
+    padding: 6px 18px;
+    outline: none;
 }
 
 #guessCount {
