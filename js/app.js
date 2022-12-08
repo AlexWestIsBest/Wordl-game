@@ -37,7 +37,7 @@ let invalidGuess = (message) => {
     setTimeout(function(){
         $(`input`).attr(`placeholder`,`Enter a 5-letter word`)
         document.querySelector(`input`).style.backgroundColor = `rgba(255,255,255,0)`
-    }, 1300)
+    }, 1800)
 }
 
 let resetUI = () => {
