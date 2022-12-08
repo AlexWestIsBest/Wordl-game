@@ -1,25 +1,30 @@
 let validateGuess = (evt) => {
     const guessCandidate = document.querySelector(`input`).value.toUpperCase()
-
     if (guessCandidate.length === 5) {
-        $.ajax(API_URL + `sp=` + guessCandidate).then(function(data) {
-            if (data.length !== 0 || data[0].score < 1000) {
-                if (data[0].word.toUpperCase() === guessCandidate) {
-                    processGuess(guessCandidate)
+        if (!guessList.includes(guessCandidate)) {
+            $.ajax(API_URL + `sp=` + guessCandidate).then(function(data) {
+                if (data.length !== 0) {
+                    if (data[0].word.toUpperCase() === guessCandidate && data[0].score > 1000) {
+                        processGuess(guessCandidate)
+                    }
+                    else {
+                        invalidGuess(`Use a real word`)
+                        resetUI()
+                    }
                 }
                 else {
-                    invalidGuess(`A weird error occurred`)
+                    invalidGuess(`Use a real word`)
                     resetUI()
                 }
-            }
-            else {
-                invalidGuess(`Use a real word`)
-                resetUI()
-            }
-        })
+            })
+        }
+        else {
+            invalidGuess(`Already used`)
+            resetUI()
+        }
     }
     else {
-        invalidGuess(`Must be 5 letters long`)
+        invalidGuess(`Must be 5 letters`)
         resetUI()
     }
 }
@@ -28,11 +33,11 @@ let invalidGuess = (message) => {
     let errorElement = document.createElement(`h5`)
     errorElement.textContent = `${message}`
     $(`input`).attr(`placeholder`,`${message}`)
-    document.querySelector(`input`).style.backgroundColor = `rgb(255, 200, 200)`
+    document.querySelector(`input`).style.backgroundColor = `rgb(238, 46, 49)`
     setTimeout(function(){
         $(`input`).attr(`placeholder`,`Enter a 5-letter word`)
-        document.querySelector(`input`).style.backgroundColor = `rgb(255, 255, 255)`
-    }, 2000)
+        document.querySelector(`input`).style.backgroundColor = `rgba(255,255,255,0)`
+    }, 1800)
 }
 
 let resetUI = () => {
@@ -44,18 +49,18 @@ let processGuess = (currentGuess) => {
     // Create color code
     for (let i = 0; i < 5; i++) {
         if (currentGuess[i] === todaysWordle.charAt(i))
-            colorCode += '2'
+            colorCode += '☑'
         else if (todaysWordle.includes(currentGuess[i]))
-            colorCode += '1'
-        else colorCode += '0'
+            colorCode += '☐'
+        else colorCode += '☒'
     }
     colorCodes.push(colorCode)
     colorCode = ''
 
     // Update HTML guess list
-    const listItem = document.createElement(`li`)
+    const listItem = document.createElement(`h3`)
     listItem.textContent = `${currentGuess} - ${colorCodes[colorCodes.length - 1]}`
-    document.querySelector(`ul`).appendChild(listItem)
+    document.querySelector(`.list`).appendChild(listItem)
 
     // Check guess
     if (currentGuess === todaysWordle) {
